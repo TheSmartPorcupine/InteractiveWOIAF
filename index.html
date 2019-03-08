@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html id="Fullscreen">
+<head>
+    <!-- Custom -->
+    <Title> Interactive World of Ice and Fire </Title>
+    <link rel="stylesheet" type="text/css" href="map.css">
+
+    <!-- Scales to device width of a mobile device. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet Files -->
+    <link rel="stylesheet" type="text/css" href="scripts/leaflet/leaflet.css">
+    <script src="scripts/leaflet/leaflet.js"></script>
+
+</head>
+
+
+
+
+<body id="Fullscreen">
+
+<div id="leafletmap" style=" height: 100%; width: 100%; margin: 0; background: #333333; "></div>
+
+<script type="text/javascript">
+
+    // Declare a map object.
+    var map = L.map('leafletmap').setView([0, 0], 1) 
+        // Creating a map variable and giving it the id of map to link to the div above.
+        // .setView Array is the x, y cords for the default view. 
+        // The number after the , which follows the square brackets defines the zoom factor. 0 = furthest out. 5 = furthest in.
+
+    // Refence the tiles.
+    L.tileLayer('map/tiles/{z}/{x}/{y}.png', {
+        minZoom: 0,
+        maxZoom: 4,
+        continuousWorld: false,
+        noWrap: true,
+    }).addTo(map);
+
+    // Markers and popups.
+
+
+</script>
+
+
+</body>
+</html>
