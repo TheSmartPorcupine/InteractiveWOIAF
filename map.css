@@ -1,0 +1,16 @@
+#Fullscreen {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#PopupTitle {
+    font-family: 'Copperplate Gothic';
+    font-size: 15pt;
+    color: black;
+}
+
+#PopupBody {
+
+}
+

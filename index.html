@@ -12,33 +12,300 @@
     <link rel="stylesheet" type="text/css" href="scripts/leaflet/leaflet.css">
     <script src="scripts/leaflet/leaflet.js"></script>
 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
+    <script src="Bootstrap/js/bootstrap.min.js"></script>
+    <script src="Bootstrap/js/bootstrap.js"></script>
+
+    <!-- JQuery -->
+    <script src="jquery/jquery.sidebar.min.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+
 </head>
-
-
-
 
 <body id="Fullscreen">
 
-<div id="leafletmap" style=" height: 100%; width: 100%; margin: 0; background: #333333; "></div>
+
+<div id="leafletmap" style=" height: 100%; width: 100%; margin: 0; background: #161616; "></div>
 
 <script type="text/javascript">
 
-    // Declare a map object.
-    var map = L.map('leafletmap').setView([0, 0], 1) 
-        // Creating a map variable and giving it the id of map to link to the div above.
-        // .setView Array is the x, y cords for the default view. 
-        // The number after the , which follows the square brackets defines the zoom factor. 0 = furthest out. 5 = furthest in.
+    // Variables
+    var mapSW = [0, 16384, ],
+        mapNE = [16384, 0];
 
-    // Refence the tiles.
-    L.tileLayer('map/tiles/{z}/{x}/{y}.png', {
-        minZoom: 0,
-        maxZoom: 4,
+        // Declare a map object.
+        var map = L.map('leafletmap').setView([0, 0], 3) 
+            // Creating a map variable and giving it the id of map to link to the div above.
+            // .setView Array is the x, y cords for the default view. 
+            // The number after the , which follows the square brackets defines the zoom factor. 0 = furthest out. 5 = furthest in.
+
+        // Refence the tiles.
+        L.tileLayer('map/tiles/{z}/{x}/{y}.png', {
+        minZoom: 3,
+        maxZoom: 6,
         continuousWorld: false,
         noWrap: true,
+        crs: L.CRS.Simple,
     }).addTo(map);
 
-    // Markers and popups.
+    
+    map.setMaxBounds(new L.LatLngBounds(
+        map.unproject(mapSW, map.getMaxZoom()),
+        map.unproject(mapNE, map.getMaxZoom())
+    ));
 
+
+
+
+
+    // ----------------------------
+    // ----- Map Marker Icons -----
+    // ----------------------------
+
+    var tully_icon = L.icon({
+        iconUrl: 'markers/house_markers/tully_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var stark_icon = L.icon({
+        iconUrl: 'markers/house_markers/stark_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var baratheon_icon = L.icon({
+        iconUrl: 'markers/house_markers/baratheon_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var stannis_icon = L.icon({
+        iconUrl: 'markers/house_markers/stannis_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var lanister_icon = L.icon({
+        iconUrl: 'markers/house_markers/lanister_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var mormont_icon = L.icon({
+        iconUrl: 'markers/house_markers/mormont_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var reed_icon = L.icon({
+        iconUrl: 'markers/house_markers/reed_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var tyrell_icon = L.icon({
+        iconUrl: 'markers/house_markers/tyrell_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var martell_icon = L.icon({
+        iconUrl: 'markers/house_markers/martell_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var aryn_icon = L.icon({
+        iconUrl: 'markers/house_markers/aryn_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+    var greyjoy_icon = L.icon({
+        iconUrl: 'markers/house_markers/greyjoy_marker.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+    });
+
+
+
+
+    // --------------------------------
+    // ----- Major Castle Markers -----
+    // --------------------------------
+
+        // Winterfell
+    var winterfell_marker = L.marker([40, -68.5], {icon: stark_icon})
+    winterfell_marker.bindPopup('<div id="PopupTitle"> Winterfell </div> <div id="PopupBody"> The anscestral castle of house Stark. </div>');
+
+        // Kings Landing
+    var kingslanding_marker = L.marker([-2, -59], {icon: baratheon_icon})
+    kingslanding_marker.bindPopup('<div id="PopupTitle"> Kings Landing </div> <div id="PopupBody"> The capital city of westeros. </div>');
+
+         // Casterly Rock
+    var casterlyrock_marker = L.marker([2.3, -84.5], {icon: lanister_icon})
+    casterlyrock_marker.bindPopup('<div id="PopupTitle"> Casterly Rock </div> <div id="PopupBody"> Enter something here </div>');
+
+        // Dragonstone
+    var dragonstone_marker = L.marker([3.3, -47.8], {icon: stannis_icon})
+    dragonstone_marker.bindPopup('<div id="PopupTitle"> Dragonstone </div> <div id="PopupBody"> Enter something here </div>');
+    
+         // Riverrun
+    var riverrun_marker = L.marker([10.2, -71.1], {icon: tully_icon})
+    riverrun_marker.bindPopup('<div id="PopupTitle"> Riverrun </div> <div id="PopupBody"> Home of the Tullys! </div>');
+
+         // Bearisland
+    var bearisland_marker = L.marker([49.4, -78], {icon: mormont_icon})
+    bearisland_marker.bindPopup('<div id="PopupTitle"> Bear Island </div> <div id="PopupBody"> Enter something here </div>');
+
+         // Greywater Watch
+    var greywater_marker = L.marker([25.8, -71.5], {icon: reed_icon})
+    greywater_marker.bindPopup('<div id="PopupTitle"> Greywater Watch </div> <div id="PopupBody"> Enter something here </div>');
+
+        // Pyke
+    var pyke_marker = L.marker([13.7, -83.9], {icon: greyjoy_icon})
+    pyke_marker.bindPopup('<div id="PopupTitle"> Pyke </div> <div id="PopupBody"> Enter something here </div>');
+
+       // Highgarden
+    var highgarden_marker = L.marker([-14, -76.5], {icon: tyrell_icon})
+    highgarden_marker.bindPopup('<div id="PopupTitle"> Highgarden </div> <div id="PopupBody"> Enter something here </div>');
+
+         // Sunspear
+    var sunspear_marker = L.marker([-28.5, -46.2], {icon: martell_icon})
+    sunspear_marker.bindPopup('<div id="PopupTitle"> Sunspear </div> <div id="PopupBody"> Enter something here </div>');
+
+        // Eyrie
+    var eyrie_marker = L.marker([15.5, -54.7], {icon: aryn_icon})
+    eyrie_marker.bindPopup('<div id="PopupTitle"> Eyrie </div> <div id="PopupBody"> Enter something here </div>');
+
+
+
+
+
+
+
+    // ----------------------------
+    // ----- Region Boundries -----
+    // ----------------------------
+    
+    L.geoJSON(lg_regions);
+
+    // The North
+    var north = [[22.8, -64.8],[19.7, -74.7],[23, -79],[22, -84],[22.6, -91.5], [29.2, -91.5], [33.3, -95.9], [43.4, -87.8], [48.3, -87], [50.9, -78.5], [52.28, -68.4], [52.28, -52.5], 
+        [49.5, -48.6],[49.6, -45.2],[47.5, -43.1],[45.6, -43.7],[44.8, -44.9],[42.5, -44.8], [41.3, -49.5],[39, -50],[37.3, -48.9],[34, -45.8], [33.4, -46], [32.7, -51], 
+        [29.4, -54], [28, -60]];
+    var polygonNorth = L.polygon(north, {color: '#9fa4ad', weight: 1, opacity: 0.7,});
+
+    // Nights Watch
+    var night = [[52.3, -68.4],[53.8, -65.4],[53.8, -54.2],[52.3, -52.9],];
+    var polygonNightsWatch = L.polygon(night, {color: 'black', weight: 1, opacity: 0.7,});
+
+    // Iron Islands
+    var ironisle = [
+    [[18, -86.2],[17.4, -89],[15.2, -90],[11.1, -87.2],[11.8, -83.4],[13.5, -81.6],[14.2, -79.8],[16.8, -78.7],[18.5, -81.4], [19.4, -84]]
+    //[[18, -98.8], [17.3, -103.5], [14.3, -103.6],[14.7, -99.8],[16.8, -98.7]];
+    ];
+    var polygonIronIslands = L.polygon(ironisle, {color: '#9e894a', weight: 1, opacity: 0.7,});
+
+    // The Vale
+    var vale = [
+    [22.8, -64.7], [27.9, -60], [27.7, -53.2], [27.2, -49], [27.5, -45.7], [25.7, -41.2], [18.9, -41], [11.3, -41], [11.3, -45.4], [8.4, -48.6], [7, -53], [7, -56.9], 
+    [11.5, -60.8], [12.7, -61], [15.2, -63.3]
+    ];
+    var polygonTheVale = L.polygon(vale, {color: '#678cc6', weight: 1, opacity: 0.7,});
+
+    // Dorne
+    var dorne = [
+    [-34.2, -76.4], [-30.8, -80.6], [-27.5, -78.6], [-21.8, -79.5], [-20.7, -78.8], [-18.8, -71.2], [-20.3, -70], [-20.7, -68.5], [-19.4, -67.4], [-18.6, -63.7],[-18.1, -62.9],
+    [-19.7, -59.3], [-22.2, -58.4], [-23.8, -50.9], [-21.7, -45.9], [-19.3, -42.2], [-19.9, -41.2], [-21.8, -40.7], [-24, -42.5], [-26.5, -42.2], [-30.9, -45], [-34.2, -50.8], [-33.8, -62.8]
+    ];
+    var polygonDorne = L.polygon(dorne, {color: '#f9c116', weight: 1, opacity: 0.7,});
+
+    // Westerlands
+    var westerlands = [
+    [-6.5, -91], [-7.5, -86.6], [-7, -79], [-4.2, -73.3], [-2.4, -73], [-0.9, -75], [4.9, -76], [5.8, -77.7], [6.5, -78], [8.5, -76.9], [10.2, -77.6], [11.2, -74.1], [13.8, -70.9], 
+    [15.5, -74], [14.8, -79.5], [14.15, -79.82], [13.45, -81.6], [11.75, -83.45], [11.1, -87.23], [4.2, -91.6], [-1, -93]
+    ];
+    var polygonWesterlands = L.polygon(westerlands, {color: '#fc1d00', weight: 1, opacity: 0.7,});
+
+    // Riverlands
+    var riverlands = [
+    [15.5, -74], [14.8, -79.5], [16.7, -78.7], [19, -77.7], [19.7, -74.7], [22.8, -64.8], [15.2, -63.4], [12.7, -61], [11.5, -60.8], [6.97, -56.9], [6.97, -53.7],
+    [5.55, -54.4], [4, -57], [4.9, -60], [3.7, -60.9], [0.9, -61.6], [-1.2, -65.5], [-2.3, -67.8], [-2.1, -70.6], [-0.57, -75], [4.89, -75.98], [5.79, -77.67], [6.5, -77.95],
+    [8.49, -76.88], [10.16, -77.58], [11.15, -74.06], [13.81, -70.9]
+    ];
+    var polygonRiverlands = L.polygon(riverlands, {color: '#4dd6d6', weight: 1, opacity: 0.7,});
+
+    // Stormlands
+    var stormlands = [
+    [-18.1, -62.9], [-19.7, -59.3], [-21.1, -58.8],[-22.7, -50.9], [-20.7, -46.6], [-16, -42], [-7, -42], [-4, -46.2], [-5.8, -50.9], [-7, -51.2], [-7, -53.3], [-7.4, -55.4], 
+    [-7.2, -57.2], [-5, -58.3], [-5.3, -61], [-5.1, -62.9], [-11, -66.1], [-11.5, -68.4], [-13.9, -69.9], [-15, -68.8], [-15.5, -69.7], [-18.79, -71.19], [-20.28, -70], 
+    [-20.65, -68.53], [-19.39, -67.43], [-18.6, -63.74]
+    ];
+    var polygonStormlands = L.polygon(stormlands, {color: '#a85426', weight: 1, opacity: 0.7,});
+
+    // Crownlands
+    var crownlands = [
+    [-5.09, -62.92], [-4.1, -65], [-1.91, -66.81], [0.878, -61.54], [3.71, -60.88], [4.83, -60], [3.93, -57], [5.52, -54.36], [6.97, -53.67], [6.94, -52.97], [8.36, -48.6],
+    [11.24, -45.41], [11.24, -42.2], [5.24, -42.6], [-0.87, -45.19], [-3.97, -46.23], [-5.79, -50.93], [-6.97, -51.24], [-6.97, -53.32], [-7.4, -55.34], [-7.18, -57.19], 
+    [-5.02, -58.27], [-5.3, -61.01]
+    ];
+    var polygonCrownlands = L.polygon(crownlands, {color: '#d6cd20', weight: 1, opacity: 0.7,});
+
+    // The Reach
+    var reach = [
+    [-1.91, -66.88], [-4.1, -65.03], [-5.11, -62.95], [-11, -66.13], [-11.5, -68.42], [-13.9, -69.91], [-15.02, -68.84], [-15.49, -69.71], [-18.79, -71.23], [-20.69, -78.81],
+    [-21.75, -79.54], [-27.5, -78.66], [-30.8, -80.63], [-33.39, -89.07], [-32, -94.61], [-21.6, -95], [-14.1, -90.26], [-7.01, -89.09], [-7.55, -86.57], [-7.05, -78.96],
+    [-4.23, -73.27], [-2.43, -72.97], [-0.9, -74.97], [-0.59, -75], [-2.15, -70.64], [-2.35, -67.74]
+    ];
+    var polygonTheReach = L.polygon(reach, {color: '#3c7f06', weight: 1, opacity: 0.7,});
+
+
+
+
+
+    // ------------------------
+    // ----- Layer Groups -----
+    // ------------------------
+
+        // Markers
+        var lg_castles = L.layerGroup([winterfell_marker, kingslanding_marker, casterlyrock_marker, riverrun_marker, dragonstone_marker, eyrie_marker, sunspear_marker,
+        highgarden_marker, pyke_marker, greywater_marker, bearisland_marker]);
+
+        // Region Overlays
+        var lg_regions = L.layerGroup([polygonNorth, polygonNightsWatch, polygonIronIslands, polygonTheVale, polygonDorne, polygonWesterlands, polygonRiverlands, 
+        polygonStormlands, polygonCrownlands, polygonTheReach]);
+
+        // Continent Names
+        var lg_continents = L.layerGroup([]);
+    
+        // Overlays
+        var overlays = {
+            "Castles" : lg_castles,
+            "Regions" : lg_regions,
+            "Continents" : lg_continents,
+        }
+        
+        // Add layer controls
+        L.control.layers(null, overlays, ).addTo(map);
+
+
+
+
+
+        // LatLan Finder --- Comment out if not in use!
+            var marker = L.marker([14, -65], {
+                draggable: true,
+            }).addTo(map);
+            marker.bindPopup('Test Marker');
+
+            marker.on('dragend', function(e) {
+                // alert(marker.getLatLng().toString());
+                marker.getPopup().setContent('Clicked ' + marker.getLatLng().toString()).openOn(map);
+            });
 
 </script>
 
